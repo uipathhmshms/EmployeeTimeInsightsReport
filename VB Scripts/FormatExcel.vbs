@@ -69,9 +69,9 @@ Sub ProcessRows(wsInput As Worksheet, wsOutput As Worksheet)
         ' Copy the remaining columns from the input row.
         wsOutput.Cells(outRow, 5).Value = monthNum
         
-        ' Copy all numerical columns from input to output (columns 6 to 14)
-        wsOutput.Range(wsOutput.Cells(outRow, 6), wsOutput.Cells(outRow, 14)).Value = _
-            wsInput.Range(wsInput.Cells(i, 6), wsInput.Cells(i, 14)).Value
+        ' Copy all numerical columns from input to output (columns 6 to 17)
+        wsOutput.Range(wsOutput.Cells(outRow, 6), wsOutput.Cells(outRow, 17)).Value = _
+            wsInput.Range(wsInput.Cells(i, 6), wsInput.Cells(i, 17)).Value
         
         outRow = outRow + 1
     Next i

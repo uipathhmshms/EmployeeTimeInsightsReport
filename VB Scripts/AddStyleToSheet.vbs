@@ -88,20 +88,20 @@ Sub FormatTotalRows()
     ' Set the active sheet
     Set ws = ActiveSheet
 
-    ' Get the last used row in column E
+    ' Get the last used row in column G
     lastRow = ws.Cells(ws.Rows.Count, 5).End(xlUp).Row
 	lastCol = ws.Cells(1, ws.Columns.Count).End(xlToLeft).Column ' Find last used column
 	
-    ' Loop through all rows in column E
+    ' Loop through all rows in column G
     For i = 2 To lastRow
         ' Check if the month=0 - meaning thats a total row
-        If ws.Cells(i, 5).Value=0 Then
+        If ws.Cells(i, 5).Value="" Then
             ' Color the entire row grey
 			ws.Range(ws.Cells(i, 2), ws.Cells(i, lastCol)).Interior.Color = RGB(192, 230, 245)
 
             ' Write "total" in Column C
             ws.Cells(i, 3).Value = "Total"
-            ' Delete the month number (Column E)
+            ' Delete the month number (Column G)
             ws.Cells(i, 5).Value = ""
         End If
     Next i
