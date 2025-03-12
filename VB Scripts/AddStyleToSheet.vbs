@@ -21,15 +21,14 @@ Sub AddStyleToSheet()
     ColorFirstColumn ws
 	' Color the header
 	ColorHeaderRow firstRowRange
-	' Aligns column A and C to the center
-	Align_A_And_C_ColumnsText
+	' Aligns column A,C,E to the center
+	Align_A_C_E_ColumnsText
 	' Center the text in the first row
 	CenterTextInFirstRow firstRowRange
 	' Add the text 'total' and color to total row 
 	FormatTotalRows
 	
-	' Merge so the department name will be written once
-	'MergeFirstColumnRows
+	AddGrandTotalRow
 End Sub
 
 Sub SetAllSheetsRTL()
@@ -62,7 +61,7 @@ Sub ColorHeaderRow(firstRowRange As Range)
     firstRowRange.Interior.Color = RGB(192, 230, 245)
 End Sub
 
-Sub Align_A_And_C_ColumnsText()
+Sub Align_A_C_E_ColumnsText()
     ' Get the used range in the active sheet
     Dim usedRange As Range
     Set usedRange = ActiveSheet.UsedRange
@@ -72,6 +71,7 @@ Sub Align_A_And_C_ColumnsText()
     For i = 2 To usedRange.Rows.Count
         Cells(i, 1).HorizontalAlignment = xlCenter  ' Column A
         Cells(i, 3).HorizontalAlignment = xlCenter  ' Column C
+		Cells(i, 5).HorizontalAlignment = xlCenter  ' Column E
     Next i
 End Sub
 
@@ -88,8 +88,8 @@ Sub FormatTotalRows()
     ' Set the active sheet
     Set ws = ActiveSheet
 
-    ' Get the last used row in column G
-    lastRow = ws.Cells(ws.Rows.Count, 5).End(xlUp).Row
+    ' Get the last used row in column C
+    lastRow = ws.Cells(ws.Rows.Count, 3).End(xlUp).Row
 	lastCol = ws.Cells(1, ws.Columns.Count).End(xlToLeft).Column ' Find last used column
 	
     ' Loop through all rows in column G
@@ -107,3 +107,46 @@ Sub FormatTotalRows()
     Next i
 End Sub
 
+Sub AddGrandTotalRow()
+    Dim ws As Worksheet
+    Dim lastRow As Long
+    Dim lastCol As Long
+    Dim col As Long
+    Dim i As Long
+    Dim hasNumericData As Boolean
+    
+    ' Set the active sheet
+    Set ws = ActiveSheet
+    
+    ' Find last used row and column
+    lastRow = ws.UsedRange.Rows.Count
+    lastCol = ws.Cells(1, ws.Columns.Count).End(xlToLeft).Column
+    
+    ' Add a row for the grand total
+    lastRow = lastRow + 1
+    
+    ' Label for Grand Total
+    ws.Cells(lastRow, 3).Value = "Grand Total"
+    
+    ' Format the grand total row
+    ws.Range(ws.Cells(lastRow, 2), ws.Cells(lastRow, lastCol)).Interior.Color = RGB(128, 200, 225)
+    ws.Range(ws.Cells(lastRow, 2), ws.Cells(lastRow, lastCol)).Font.Bold = True
+    
+    ' Calculate and add grand totals for each numeric column
+    For col = 2 To lastCol
+        ' Check if column contains numeric data
+        hasNumericData = False
+        For i = 2 To lastRow - 1
+            If IsNumeric(ws.Cells(i, col).Value) Then
+                hasNumericData = True
+                Exit For
+            End If
+        Next i
+        
+        ' If column has numeric data, calculate grand total
+        If hasNumericData Then
+            ' Create a SUM formula that excludes header row
+            ws.Cells(lastRow, col).Formula = "=SUM(" & ws.Cells(2, col).Address & ":" & ws.Cells(lastRow - 1, col).Address & ")"
+        End If
+    Next col
+End Sub
