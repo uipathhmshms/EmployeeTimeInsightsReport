@@ -6,7 +6,7 @@
   <VisualBasic.Settings>
     <x:Null />
   </VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>1047,1391</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>1179,1391</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>CreateExcel_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <sco:Collection x:TypeArguments="x:String">
@@ -143,23 +143,23 @@
                         <scg:Dictionary x:TypeArguments="x:String, x:Object">
                           <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                           <x:Boolean x:Key="IsPinned">False</x:Boolean>
-                          <av:Point x:Key="ShapeLocation">80,2.5</av:Point>
+                          <av:Point x:Key="ShapeLocation">260,2.5</av:Point>
                           <av:Size x:Key="ShapeSize">60,75</av:Size>
-                          <av:PointCollection x:Key="ConnectorLocation">110,77.5 110,97.5</av:PointCollection>
+                          <av:PointCollection x:Key="ConnectorLocation">290,77.5 290,97.5</av:PointCollection>
                         </scg:Dictionary>
                       </sap:WorkflowViewStateService.ViewState>
                       <Flowchart.StartNode>
-                        <x:Reference>__ReferenceID5</x:Reference>
+                        <x:Reference>__ReferenceID3</x:Reference>
                       </Flowchart.StartNode>
-                      <FlowStep x:Name="__ReferenceID5">
+                      <FlowStep x:Name="__ReferenceID3">
                         <sap:WorkflowViewStateService.ViewState>
                           <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                            <av:Point x:Key="ShapeLocation">10,97.5</av:Point>
+                            <av:Point x:Key="ShapeLocation">190,97.5</av:Point>
                             <av:Size x:Key="ShapeSize">200,52</av:Size>
-                            <av:PointCollection x:Key="ConnectorLocation">110,149.5 110,169.5</av:PointCollection>
+                            <av:PointCollection x:Key="ConnectorLocation">290,149.5 290,169.5</av:PointCollection>
                           </scg:Dictionary>
                         </sap:WorkflowViewStateService.ViewState>
-                        <ueab:WriteRangeX Destination="[Excel.Sheet(&quot;Sheet1&quot;).Range(&quot;A1&quot;)]" DisplayName="Write DataTable to Excel" sap:VirtualizedContainerService.HintSize="200,52" sap2010:WorkflowViewState.IdRef="WriteRangeX_3" IgnoreEmptySource="False" Source="[in_dt_data]">
+                        <ueab:WriteRangeX Destination="[Excel.Sheet(&quot;EmployeesInsight&quot;).Range(&quot;A1&quot;)]" DisplayName="Write DataTable to Excel" sap:VirtualizedContainerService.HintSize="434,159" sap2010:WorkflowViewState.IdRef="WriteRangeX_3" IgnoreEmptySource="False" Source="[in_dt_data]">
                           <sap:WorkflowViewStateService.ViewState>
                             <scg:Dictionary x:TypeArguments="x:String, x:Object">
                               <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -170,9 +170,9 @@
                           <FlowStep x:Name="__ReferenceID0">
                             <sap:WorkflowViewStateService.ViewState>
                               <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                                <av:Point x:Key="ShapeLocation">10,169.5</av:Point>
+                                <av:Point x:Key="ShapeLocation">190,169.5</av:Point>
                                 <av:Size x:Key="ShapeSize">200,52</av:Size>
-                                <av:PointCollection x:Key="ConnectorLocation">110,221.5 110,244.5</av:PointCollection>
+                                <av:PointCollection x:Key="ConnectorLocation">290,221.5 290,241.5</av:PointCollection>
                               </scg:Dictionary>
                             </sap:WorkflowViewStateService.ViewState>
                             <ui:LogMessage sap:VirtualizedContainerService.HintSize="200,52" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="[UiPath.Core.Activities.LogLevel.Info]" Message="[&quot;Wrote data from in_dt_data data table to sheet Sheet1 in Excel file at A1&quot;]">
@@ -186,15 +186,15 @@
                               <FlowStep x:Name="__ReferenceID1">
                                 <sap:WorkflowViewStateService.ViewState>
                                   <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                                    <av:Point x:Key="ShapeLocation">10,244.5</av:Point>
-                                    <av:Size x:Key="ShapeSize">200,94</av:Size>
-                                    <av:PointCollection x:Key="ConnectorLocation">110,338.5 110,358.5</av:PointCollection>
+                                    <av:Point x:Key="ShapeLocation">190,241.5</av:Point>
+                                    <av:Size x:Key="ShapeSize">200,83</av:Size>
+                                    <av:PointCollection x:Key="ConnectorLocation">290,324.5 290,344</av:PointCollection>
                                   </scg:Dictionary>
                                 </sap:WorkflowViewStateService.ViewState>
-                                <ueab:InvokeVBAX Result="{x:Null}" sap2010:Annotation.AnnotationText="Formats the data and the structure of the sheet" CodeFilePath="[Path.Combine(System.IO.Directory.GetCurrentDirectory(), &quot;VB Scripts&quot;,&quot;FormatExcel.vbs&quot;)]" DisplayName="Invoke VBA" EntryMethodName="FormatExcel" sap:VirtualizedContainerService.HintSize="200,94" sap2010:WorkflowViewState.IdRef="InvokeVBAX_3" Workbook="[Excel]">
+                                <ueab:InvokeVBAX Result="{x:Null}" sap2010:Annotation.AnnotationText="Styles the sheet" CodeFilePath="[Path.Combine(System.IO.Directory.GetCurrentDirectory(), &quot;VB Scripts&quot;,&quot;AddStyleToSheet.vbs&quot;)]" DisplayName="Invoke VBA" EntryMethodName="AddStyleToSheet" sap:VirtualizedContainerService.HintSize="200,83" sap2010:WorkflowViewState.IdRef="InvokeVBAX_5" Workbook="[Excel]">
                                   <ueab:InvokeVBAX.Body>
                                     <ActivityAction>
-                                      <Sequence DisplayName="Do" sap2010:WorkflowViewState.IdRef="Sequence_6">
+                                      <Sequence DisplayName="Do" sap2010:WorkflowViewState.IdRef="Sequence_7">
                                         <sap:WorkflowViewStateService.ViewState>
                                           <scg:Dictionary x:TypeArguments="x:String, x:Object">
                                             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -214,65 +214,17 @@
                                   <FlowStep x:Name="__ReferenceID2">
                                     <sap:WorkflowViewStateService.ViewState>
                                       <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                                        <av:Point x:Key="ShapeLocation">10,358.5</av:Point>
+                                        <av:Point x:Key="ShapeLocation">190,344</av:Point>
                                         <av:Size x:Key="ShapeSize">200,52</av:Size>
-                                        <av:PointCollection x:Key="ConnectorLocation">210,384.5 240,384.5 240,140 290,140</av:PointCollection>
                                       </scg:Dictionary>
                                     </sap:WorkflowViewStateService.ViewState>
-                                    <ui:LogMessage sap:VirtualizedContainerService.HintSize="200,52" sap2010:WorkflowViewState.IdRef="LogMessage_2" Level="[UiPath.Core.Activities.LogLevel.Info]" Message="[&quot;Invoke VBA function stored in script FormatExcel.vbs which is located in VBScripts directory&quot;]">
+                                    <ui:LogMessage sap:VirtualizedContainerService.HintSize="200,52" sap2010:WorkflowViewState.IdRef="LogMessage_3" Level="[UiPath.Core.Activities.LogLevel.Info]" Message="[&quot;VBA macro was run from file&quot; + System.IO.Directory.GetCurrentDirectory().ToString+ &quot;VB Scripts/AddStyleToSheet.vbs on Excel workbook&quot; + Excel.ToString()]">
                                       <sap:WorkflowViewStateService.ViewState>
                                         <scg:Dictionary x:TypeArguments="x:String, x:Object">
                                           <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                                         </scg:Dictionary>
                                       </sap:WorkflowViewStateService.ViewState>
                                     </ui:LogMessage>
-                                    <FlowStep.Next>
-                                      <FlowStep x:Name="__ReferenceID3">
-                                        <sap:WorkflowViewStateService.ViewState>
-                                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                                            <av:Point x:Key="ShapeLocation">290,98.5</av:Point>
-                                            <av:Size x:Key="ShapeSize">200,83</av:Size>
-                                            <av:PointCollection x:Key="ConnectorLocation">390,181.5 390,201.5</av:PointCollection>
-                                          </scg:Dictionary>
-                                        </sap:WorkflowViewStateService.ViewState>
-                                        <ueab:InvokeVBAX Result="{x:Null}" sap2010:Annotation.AnnotationText="Styles the sheet" CodeFilePath="[Path.Combine(System.IO.Directory.GetCurrentDirectory(), &quot;VB Scripts&quot;,&quot;AddStyleToSheet.vbs&quot;)]" DisplayName="Invoke VBA" EntryMethodName="AddStyleToSheet" sap:VirtualizedContainerService.HintSize="434,331" sap2010:WorkflowViewState.IdRef="InvokeVBAX_5" Workbook="[Excel]">
-                                          <ueab:InvokeVBAX.Body>
-                                            <ActivityAction>
-                                              <Sequence DisplayName="Do" sap2010:WorkflowViewState.IdRef="Sequence_7">
-                                                <sap:WorkflowViewStateService.ViewState>
-                                                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                                                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-                                                  </scg:Dictionary>
-                                                </sap:WorkflowViewStateService.ViewState>
-                                              </Sequence>
-                                            </ActivityAction>
-                                          </ueab:InvokeVBAX.Body>
-                                          <sap:WorkflowViewStateService.ViewState>
-                                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                                              <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
-                                              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-                                            </scg:Dictionary>
-                                          </sap:WorkflowViewStateService.ViewState>
-                                        </ueab:InvokeVBAX>
-                                        <FlowStep.Next>
-                                          <FlowStep x:Name="__ReferenceID4">
-                                            <sap:WorkflowViewStateService.ViewState>
-                                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                                                <av:Point x:Key="ShapeLocation">290,201.5</av:Point>
-                                                <av:Size x:Key="ShapeSize">200,52</av:Size>
-                                              </scg:Dictionary>
-                                            </sap:WorkflowViewStateService.ViewState>
-                                            <ui:LogMessage sap:VirtualizedContainerService.HintSize="200,52" sap2010:WorkflowViewState.IdRef="LogMessage_3" Level="[UiPath.Core.Activities.LogLevel.Info]" Message="[&quot;VBA macro was run from file&quot; + System.IO.Directory.GetCurrentDirectory().ToString+ &quot;VB Scripts/AddStyleToSheet.vbs on Excel workbook&quot; + Excel.ToString()]">
-                                              <sap:WorkflowViewStateService.ViewState>
-                                                <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                                                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-                                                </scg:Dictionary>
-                                              </sap:WorkflowViewStateService.ViewState>
-                                            </ui:LogMessage>
-                                          </FlowStep>
-                                        </FlowStep.Next>
-                                      </FlowStep>
-                                    </FlowStep.Next>
                                   </FlowStep>
                                 </FlowStep.Next>
                               </FlowStep>
@@ -283,8 +235,6 @@
                       <x:Reference>__ReferenceID0</x:Reference>
                       <x:Reference>__ReferenceID1</x:Reference>
                       <x:Reference>__ReferenceID2</x:Reference>
-                      <x:Reference>__ReferenceID3</x:Reference>
-                      <x:Reference>__ReferenceID4</x:Reference>
                     </Flowchart>
                   </Sequence>
                 </ActivityAction>

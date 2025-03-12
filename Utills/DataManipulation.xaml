@@ -5,7 +5,7 @@
   <VisualBasic.Settings>
     <x:Null />
   </VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>1481,702</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>1179,827</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>DataManipulation_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <sco:Collection x:TypeArguments="x:String">
@@ -99,36 +99,65 @@
       <AssemblyReference>netstandard</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Flowchart DisplayName="DataManipulation" sap:VirtualizedContainerService.HintSize="634,637" sap2010:WorkflowViewState.IdRef="Flowchart_1">
+  <Flowchart DisplayName="DataManipulation" sap:VirtualizedContainerService.HintSize="634,691" sap2010:WorkflowViewState.IdRef="Flowchart_1">
     <Flowchart.Variables>
       <Variable x:TypeArguments="scg:List(nhr:RowDataRecord)" Name="test" />
+      <Variable x:TypeArguments="sd:DataTable" Name="dtProcessed" />
+      <Variable x:TypeArguments="sd:DataTable" Name="groupedData" />
     </Flowchart.Variables>
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
         <av:Point x:Key="ShapeLocation">270,2.5</av:Point>
         <av:Size x:Key="ShapeSize">60,75</av:Size>
-        <av:PointCollection x:Key="ConnectorLocation">300,77.5 300,127.5</av:PointCollection>
+        <av:PointCollection x:Key="ConnectorLocation">300,77.5 300,97.5</av:PointCollection>
+        <x:Double x:Key="Height">653.5</x:Double>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
     <Flowchart.StartNode>
-      <x:Reference>__ReferenceID1</x:Reference>
+      <x:Reference>__ReferenceID2</x:Reference>
     </Flowchart.StartNode>
     <FlowStep x:Name="__ReferenceID0">
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
-          <av:Point x:Key="ShapeLocation">200,229.5</av:Point>
+          <av:Point x:Key="ShapeLocation">200,169.5</av:Point>
           <av:Size x:Key="ShapeSize">200,52</av:Size>
+          <av:PointCollection x:Key="ConnectorLocation">300,221.5 300,241.5</av:PointCollection>
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
       <ui:SortDataTable ColumnIndex="{x:Null}" DataColumn="{x:Null}" ColumnName="מחלקה" DataTable="[io_dt_reportData]" DisplayName="Sort Data Table" sap:VirtualizedContainerService.HintSize="200,52" sap2010:WorkflowViewState.IdRef="SortDataTable_2" Order="Ascending" OutputDataTable="[io_dt_reportData]" SortOrder="Ascending" />
+      <FlowStep.Next>
+        <FlowStep x:Name="__ReferenceID1">
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <av:Point x:Key="ShapeLocation">200,241.5</av:Point>
+              <av:Size x:Key="ShapeSize">200,94</av:Size>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+          <ui:InvokeCode ContinueOnError="{x:Null}" sap2010:Annotation.AnnotationText="קיבוץ לפי מחלקה,קוד סוכן,שם סוכן" Code="Try&#xD;&#xA;    ' Ensure DataTable is not empty&#xD;&#xA;    If io_dt_reportData Is Nothing OrElse io_dt_reportData.Rows.Count = 0 Then&#xD;&#xA;        Throw New Exception(&quot;DataTable is empty or not initialized.&quot;)&#xD;&#xA;    End If&#xD;&#xA;&#xD;&#xA;    ' Debug: Print column names to verify their correctness&#xD;&#xA;    Dim actualColumns As String = String.Join(&quot;, &quot;, io_dt_reportData.Columns.Cast(Of DataColumn).Select(Function(c) c.ColumnName))&#xD;&#xA;    Console.WriteLine(&quot;Available Columns: &quot; &amp; actualColumns)&#xD;&#xA;&#xD;&#xA;    ' List of columns to check for duplicates (trim to remove extra spaces)&#xD;&#xA;    Dim checkColumns As String() = {&quot;מחלקה&quot;, &quot;קוד סוכן&quot;, &quot;שם סוכן&quot;}.Select(Function(col) col.Trim()).ToArray()&#xD;&#xA;&#xD;&#xA;    ' Validate that all required columns exist&#xD;&#xA;    For Each col In checkColumns&#xD;&#xA;        If Not io_dt_reportData.Columns.Contains(col) Then&#xD;&#xA;            Throw New Exception(&quot;Column '&quot; &amp; col &amp; &quot;' does not exist in DataTable. Available Columns: &quot; &amp; actualColumns)&#xD;&#xA;        End If&#xD;&#xA;    Next&#xD;&#xA;&#xD;&#xA;    ' Create a clone of the DataTable structure (without data)&#xD;&#xA;    Dim dtClone As DataTable = io_dt_reportData.Clone()&#xD;&#xA;&#xD;&#xA;    ' HashSet to track seen values in the specific columns&#xD;&#xA;    Dim seenValues As New HashSet(Of String)&#xD;&#xA;&#xD;&#xA;    ' Variables to track previous department and agent code&#xD;&#xA;    Dim prevDept As String = &quot;&quot;&#xD;&#xA;    Dim prevAgentCode As String = &quot;&quot;&#xD;&#xA;&#xD;&#xA;    ' Iterate through the original DataTable and modify values in the clone&#xD;&#xA;    For Each row As DataRow In io_dt_reportData.Rows&#xD;&#xA;        Try&#xD;&#xA;            ' Create a new row for the clone&#xD;&#xA;            Dim newRow As DataRow = dtClone.NewRow()&#xD;&#xA;            newRow.ItemArray = CType(row.ItemArray.Clone(), Object()) ' Explicitly cast to Object()&#xD;&#xA;&#xD;&#xA;            ' Generate the key for duplicate check&#xD;&#xA;            Dim key As String = String.Join(&quot;|&quot;, checkColumns.Select(Function(col) row(col).ToString()))&#xD;&#xA;&#xD;&#xA;            If seenValues.Contains(key) Then&#xD;&#xA;                ' Replace duplicate values with empty string in the clone&#xD;&#xA;                For Each col In checkColumns&#xD;&#xA;                    newRow(col) = &quot;&quot;&#xD;&#xA;                Next&#xD;&#xA;            Else&#xD;&#xA;                seenValues.Add(key)&#xD;&#xA;            End If&#xD;&#xA;&#xD;&#xA;            ' Ensure &quot;מחלקה&quot; is only displayed for the first row of each department&#xD;&#xA;            If newRow(&quot;מחלקה&quot;).ToString() = prevDept Then&#xD;&#xA;                newRow(&quot;מחלקה&quot;) = &quot;&quot;&#xD;&#xA;            Else&#xD;&#xA;                prevDept = newRow(&quot;מחלקה&quot;).ToString()&#xD;&#xA;            End If&#xD;&#xA;&#xD;&#xA;            ' Ensure &quot;קוד סוכן&quot; is only displayed for the first row of each agent&#xD;&#xA;            If newRow(&quot;קוד סוכן&quot;).ToString() = prevAgentCode Then&#xD;&#xA;                newRow(&quot;קוד סוכן&quot;) = &quot;&quot;&#xD;&#xA;            Else&#xD;&#xA;                prevAgentCode = newRow(&quot;קוד סוכן&quot;).ToString()&#xD;&#xA;            End If&#xD;&#xA;&#xD;&#xA;            ' If this is a &quot;Total&quot; row, clear the &quot;קוד סוכן&quot; and &quot;מחלקה&quot; values&#xD;&#xA;            If newRow(&quot;שם סוכן&quot;).ToString().ToLower().Contains(&quot;total&quot;) Then&#xD;&#xA;                newRow(&quot;קוד סוכן&quot;) = &quot;&quot;&#xD;&#xA;                newRow(&quot;מחלקה&quot;) = &quot;&quot;&#xD;&#xA;            End If&#xD;&#xA;&#xD;&#xA;            ' Add the modified row to the cloned DataTable&#xD;&#xA;            dtClone.Rows.Add(newRow)&#xD;&#xA;        Catch innerEx As Exception&#xD;&#xA;            ' Log inner exception for debugging&#xD;&#xA;            Console.WriteLine(&quot;Error processing row: &quot; &amp; innerEx.Message)&#xD;&#xA;        End Try&#xD;&#xA;    Next&#xD;&#xA;&#xD;&#xA;    ' Assign the modified clone back to io_dt_reportData&#xD;&#xA;    result = dtClone&#xD;&#xA;&#xD;&#xA;Catch ex As Exception&#xD;&#xA;    ' Log the exception for debugging in UiPath&#xD;&#xA;    Console.WriteLine(&quot;Error in Invoke Code: &quot; &amp; ex.Message)&#xD;&#xA;End Try&#xD;&#xA;" DisplayName="Invoke Code" sap:VirtualizedContainerService.HintSize="334,196" sap2010:WorkflowViewState.IdRef="InvokeCode_1">
+            <ui:InvokeCode.Arguments>
+              <InOutArgument x:TypeArguments="sd:DataTable" x:Key="io_dt_reportData">
+                <VisualBasicReference x:TypeArguments="sd:DataTable" ExpressionText="io_dt_reportData" />
+              </InOutArgument>
+              <OutArgument x:TypeArguments="sd:DataTable" x:Key="result">
+                <VisualBasicReference x:TypeArguments="sd:DataTable" ExpressionText="io_dt_reportData" />
+              </OutArgument>
+            </ui:InvokeCode.Arguments>
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+          </ui:InvokeCode>
+        </FlowStep>
+      </FlowStep.Next>
     </FlowStep>
-    <FlowStep x:Name="__ReferenceID1">
+    <FlowStep x:Name="__ReferenceID2">
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
-          <av:Point x:Key="ShapeLocation">200,127.5</av:Point>
+          <av:Point x:Key="ShapeLocation">200,97.5</av:Point>
           <av:Size x:Key="ShapeSize">200,52</av:Size>
-          <av:PointCollection x:Key="ConnectorLocation">300,179.5 300,229.5</av:PointCollection>
+          <av:PointCollection x:Key="ConnectorLocation">300,149.5 300,169.5</av:PointCollection>
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
       <ui:SortDataTable ColumnIndex="{x:Null}" DataColumn="{x:Null}" ColumnName="שם סוכן" DataTable="[io_dt_reportData]" DisplayName="Sort Data Table" sap:VirtualizedContainerService.HintSize="200,52" sap2010:WorkflowViewState.IdRef="SortDataTable_3" Order="Ascending" OutputDataTable="[io_dt_reportData]" SortOrder="Ascending" />
@@ -136,5 +165,6 @@
         <x:Reference>__ReferenceID0</x:Reference>
       </FlowStep.Next>
     </FlowStep>
+    <x:Reference>__ReferenceID1</x:Reference>
   </Flowchart>
 </Activity>
