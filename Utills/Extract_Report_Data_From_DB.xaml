@@ -5,7 +5,7 @@
   <VisualBasic.Settings>
     <x:Null />
   </VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>1179,742</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>1179,702</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>Extract_Report_Data_From_DB_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <sco:Collection x:TypeArguments="x:String">
@@ -141,7 +141,7 @@
           <av:PointCollection x:Key="ConnectorLocation">300,389.5 300,409.5</av:PointCollection>
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
-      <ui:ExecuteQuery ContinueOnError="{x:Null}" TimeoutMS="{x:Null}" sap2010:Annotation.AnnotationText="Extract all manager's employees data from sql procedure" DataTable="[out_reportData]" DisplayName="Extract All Employee IDs" ExistingDbConnection="[dbConn_connection]" sap:VirtualizedContainerService.HintSize="334,156" sap2010:WorkflowViewState.IdRef="ExecuteQuery_1" Sql="[$&quot;&#xD;&#xA;&#x9;USE [Halperin]&#xD;&#xA;&#x9;&#xD;&#xA;&#x9;DECLARE @return_value int&#xD;&#xA;&#x9;&#xD;&#xA;&#x9;EXEC @return_value = [dbo].[sp_GetAllEmployeeDataByManager_RPA]&#xD;&#xA;&#x9;    @ManagerCode = N'{QueueItem_CurrentTransaction.SpecificContent(&quot;קוד מנהל פרויקט&quot;).tostring}'&#xD;&#xA;&#x9;&#xD;&#xA;&#x9;SELECT 'Return Value' = @return_value&#xD;&#xA;&quot;]">
+      <ui:ExecuteQuery ContinueOnError="{x:Null}" TimeoutMS="{x:Null}" sap2010:Annotation.AnnotationText="Extract all manager's employees data from sql procedure" DataTable="[out_reportData]" DisplayName="Extract All Employee IDs" ExistingDbConnection="[dbConn_connection]" sap:VirtualizedContainerService.HintSize="200,109" sap2010:WorkflowViewState.IdRef="ExecuteQuery_1" Sql="[$&quot;&#xA;&#x9;USE [Halperin]&#xA;&#x9;&#xA;&#x9;DECLARE @return_value int&#xA;&#x9;&#xA;&#x9;EXEC @return_value = [dbo].[sp_GetAllEmployeeDataByManager_RPA]&#xA;&#x9;    @ManagerCode = N'{QueueItem_CurrentTransaction.SpecificContent(&quot;קוד מנהל פרויקט&quot;).tostring}'&#xA;&#x9;&#xA;&#x9;SELECT 'Return Value' = @return_value&#xA;&quot;]">
         <ui:ExecuteQuery.Parameters>
           <scg:Dictionary x:TypeArguments="x:String, Argument" />
         </ui:ExecuteQuery.Parameters>

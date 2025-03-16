@@ -2,7 +2,7 @@
   <x:Members>
     <x:Property Name="BreakTriggerScopeInArgument" Type="InArgument(x:String)" />
   </x:Members>
-  <sap:VirtualizedContainerService.HintSize>1047,827</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>993,852</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>ActivityBuilder_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <scg:List x:TypeArguments="x:String" Capacity="56">
@@ -244,14 +244,21 @@
           <av:PointCollection x:Key="ConnectorLocation">220,100.5 220,123.4</av:PointCollection>
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
-      <Sequence DisplayName="variable declarations and conversions " sap:VirtualizedContainerService.HintSize="200,81" sap2010:WorkflowViewState.IdRef="Sequence_3">
+      <Sequence DisplayName="variable declarations and conversions " sap:VirtualizedContainerService.HintSize="496,921" sap2010:WorkflowViewState.IdRef="Sequence_3">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">False</x:Boolean>
             <x:Boolean x:Key="IsPinned">False</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
-        <Assign sap:VirtualizedContainerService.HintSize="434,82" sap2010:WorkflowViewState.IdRef="Assign_1">
+        <ui:InvokeCode ContinueOnError="{x:Null}" Code="' Import necessary namespaces (ensure these are in &quot;Imported Namespaces&quot; in Invoke Code)&#xD;&#xA;' UiPath.Core&#xD;&#xA;' System.Collections.Generic&#xD;&#xA;&#xD;&#xA;' Create a dictionary to simulate SpecificContent&#xD;&#xA;Dim specificContent As New Dictionary(Of String, Object)&#xD;&#xA;specificContent.Add(&quot;קוד מנהל פרויקט&quot;, &quot;7100079&quot;) ' Example key-value pair&#xD;&#xA;specificContent.Add(&quot;SomeOtherField&quot;, &quot;TestValue&quot;) ' Add more fields as needed&#xD;&#xA;&#xD;&#xA;' Create a real QueueItem object&#xD;&#xA;io_queueItem = New UiPath.Core.QueueItem()&#xD;&#xA;io_queueItem.SpecificContent = specificContent&#xD;&#xA;io_queueItem.Priority = UiPath.Core.QueueItemPriority.High ' Use enum for Priority&#xD;&#xA;io_queueItem.Status = QueueItemStatus.New&#xD;&#xA;&#xD;&#xA;' Test accessing it&#xD;&#xA;Console.WriteLine(io_queueItem.SpecificContent(&quot;קוד מנהל פרויקט&quot;).ToString) ' Outputs: 7100110" DisplayName="Invoke Code" sap:VirtualizedContainerService.HintSize="434,165" sap2010:WorkflowViewState.IdRef="InvokeCode_1">
+          <ui:InvokeCode.Arguments>
+            <InOutArgument x:TypeArguments="ui:QueueItem" x:Key="io_queueItem">
+              <VisualBasicReference x:TypeArguments="ui:QueueItem" ExpressionText="QueueItem_CurrentTransaction" />
+            </InOutArgument>
+          </ui:InvokeCode.Arguments>
+        </ui:InvokeCode>
+        <Assign sap:VirtualizedContainerService.HintSize="434,81" sap2010:WorkflowViewState.IdRef="Assign_1">
           <Assign.To>
             <OutArgument x:TypeArguments="x:String">[str_excelFileName]</OutArgument>
           </Assign.To>
