@@ -32,10 +32,8 @@ Sub AddStyleToSheet()
 
 	CenterTextInFirstRow firstRowRange
 
-	FormatTotalRows
-	
-	AddGrandTotalRow
-	
+	FormatTotalRows	
+		
 	FormatBigNumbersWithCommas
 End Sub
 
@@ -113,50 +111,6 @@ Sub FormatTotalRows()
             ws.Cells(i, 5).Value = ""
         End If
     Next i
-End Sub
-
-Sub AddGrandTotalRow()
-    Dim ws As Worksheet
-    Dim lastRow As Long
-    Dim lastCol As Long
-    Dim col As Long
-    Dim i As Long
-    Dim hasNumericData As Boolean
-    
-    ' Set the active sheet
-    Set ws = ActiveSheet
-    
-    ' Find last used row and column
-    lastRow = ws.UsedRange.Rows.Count
-    lastCol = ws.Cells(1, ws.Columns.Count).End(xlToLeft).Column
-    
-    ' Add a row for the grand total
-    lastRow = lastRow + 1
-    
-    ' Label for Grand Total
-    ws.Cells(lastRow, 3).Value = "Grand Total"
-    
-    ' Format the grand total row
-    ws.Range(ws.Cells(lastRow, 1), ws.Cells(lastRow, lastCol)).Interior.Color = RGB(68,179,225)
-    ws.Range(ws.Cells(lastRow, 1), ws.Cells(lastRow, lastCol)).Font.Bold = True
-    
-    ' Calculate and add grand totals for each numeric column
-    For col = 6 To lastCol
-        ' Check if column contains numeric data
-        hasNumericData = False
-        For i = 2 To lastRow - 1
-            If IsNumeric(ws.Cells(i, col).Value) Then
-                hasNumericData = True
-                Exit For
-            End If
-        Next i
-        
-        ' If column has numeric data, calculate grand total
-        If hasNumericData Then
-            ' Create a SUM formula that excludes header row
-            ws.Cells(lastRow, col).Formula = "=SUM(" & ws.Cells(2, col).Address & ":" & ws.Cells(lastRow - 1, col).Address & ")"
-        End If
-    Next col
 End Sub
 
 ' Colors all numeric values in the table blue
