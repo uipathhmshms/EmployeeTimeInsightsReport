@@ -20,18 +20,18 @@ Sub AddStyleToSheet()
     ' Color the first column (except header)
     ColorFirstColumn ws
 	
-	ColorAllNumbersBlue
 	ColorLowPercentagesInColumnI
 	
-	ColorHighVacationHoursInColumnL
+	ColorHighVacationHoursInColumnO
 	
-	' Color the header
+	ColorAllNumbersBlue
+	
 	ColorHeaderRow firstRowRange
-	' Aligns column A,C,E to the center
+
 	Align_A_C_E_ColumnsText
-	' Center the text in the first row
+
 	CenterTextInFirstRow firstRowRange
-	' Add the text 'total' and color to total row 
+
 	FormatTotalRows
 	
 	AddGrandTotalRow
@@ -238,18 +238,11 @@ Sub ColorLowPercentagesInColumnI()
             End If
             On Error GoTo 0 ' Reset error handling
             
-            ' Output for debugging
-            Debug.Print "Row " & i & ": Original = '" & ws.Cells(i, 9).Text & "', Cleaned = '" & cellValue & "', Numeric = " & numericValue & ", IsNumeric = " & isNumericValue
-            
             ' Check if the value is a valid number and less than 100
             If isNumericValue And numericValue > 0 And numericValue < 100 Then
-                ' Set the font color to red
-                ws.Cells(i, 9).Font.Color = vbRed
+                ' Set the background color to red
+                ws.Cells(i, 9).Interior.Color = RGB(255, 192, 203)
                 Debug.Print "Row " & i & " colored red (Value < 100)"
-            Else
-                ' Reset to black if not less than 100 or invalid
-                ws.Cells(i, 9).Font.Color = vbBlack
-                Debug.Print "Row " & i & " not colored (Value >= 100 or invalid)"
             End If
         Else
             ' Handle non-percentage cells (e.g., empty or total rows)
@@ -292,8 +285,8 @@ Sub FormatBigNumbersWithCommas()
     Next cell
 End Sub
 
-' colors values greater than 90 in column L red
-Sub ColorHighVacationHoursInColumnL()
+' colors values greater than 90 in column N red
+Sub ColorHighVacationHoursInColumnO()
     Dim ws As Worksheet
     Dim lastRow As Long
     Dim i As Long
@@ -304,8 +297,8 @@ Sub ColorHighVacationHoursInColumnL()
     ' Set the active sheet
     Set ws = ActiveSheet
     
-    ' Find the last used row in column L (12th column)
-    lastRow = ws.Cells(ws.Rows.Count, 12).End(xlUp).Row
+    ' Find the last used row in column N (14th column)
+    lastRow = ws.Cells(ws.Rows.Count, 15).End(xlUp).Row
     
     ' Loop through all rows in column L, starting from row 2 (skip header)
     For i = 2 To lastRow
@@ -316,7 +309,7 @@ Sub ColorHighVacationHoursInColumnL()
         End If
         
         ' Get the cell value as a string and remove leading/trailing spaces
-        cellValue = Trim(ws.Cells(i, 12).Text) ' Use .Text to get the displayed value
+        cellValue = Trim(ws.Cells(i, 15).Text) ' Use .Text to get the displayed value
         
         ' Reset flags and values
         isNumericValue = False
@@ -334,13 +327,10 @@ Sub ColorHighVacationHoursInColumnL()
             End If
             On Error GoTo 0 ' Reset error handling
             
-            ' Output for debugging
-            Debug.Print "Row " & i & ": Original = '" & ws.Cells(i, 12).Text & "', Numeric = " & numericValue & ", IsNumeric = " & isNumericValue
-            
             ' Check if the value is a valid number and greater than 90
             If isNumericValue And numericValue > 90 Then
-                ' Set the font color to red
-                ws.Cells(i, 12).Font.Color = vbRed
+                ' Set the background color to red
+				ws.Cells(i, 15).Interior.Color = RGB(255, 192, 203)
                 Debug.Print "Row " & i & " colored red (Value > 90)"
             Else
                 ' Reset to black if not greater than 90 or invalid

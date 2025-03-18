@@ -2,7 +2,7 @@
   <x:Members>
     <x:Property Name="BreakTriggerScopeInArgument" Type="InArgument(x:String)" />
   </x:Members>
-  <sap:VirtualizedContainerService.HintSize>993,852</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>1109,702</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>ActivityBuilder_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <scg:List x:TypeArguments="x:String" Capacity="56">
@@ -143,6 +143,7 @@
     <Flowchart.Variables>
       <Variable x:TypeArguments="sd:DataTable" Name="dt_reportData" />
       <Variable x:TypeArguments="x:String" Name="str_excelFileName" />
+      <Variable x:TypeArguments="x:String" Name="str_HtmlContent" />
     </Flowchart.Variables>
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -154,9 +155,9 @@
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
     <Flowchart.StartNode>
-      <x:Reference>__ReferenceID3</x:Reference>
+      <x:Reference>__ReferenceID5</x:Reference>
     </Flowchart.StartNode>
-    <FlowStep x:Name="__ReferenceID1">
+    <FlowStep x:Name="__ReferenceID2">
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
           <av:Point x:Key="ShapeLocation">120,123.4</av:Point>
@@ -175,7 +176,7 @@
         </sap:WorkflowViewStateService.ViewState>
       </ui:InvokeWorkflowFile>
       <FlowStep.Next>
-        <FlowStep x:Name="__ReferenceID2">
+        <FlowStep x:Name="__ReferenceID3">
           <sap:WorkflowViewStateService.ViewState>
             <scg:Dictionary x:TypeArguments="x:String, x:Object">
               <av:Point x:Key="ShapeLocation">120,195.4</av:Point>
@@ -199,6 +200,7 @@
                 <scg:Dictionary x:TypeArguments="x:String, x:Object">
                   <av:Point x:Key="ShapeLocation">120,277.4</av:Point>
                   <av:Size x:Key="ShapeSize">200,52</av:Size>
+                  <av:PointCollection x:Key="ConnectorLocation">220,329.4 220,357.4</av:PointCollection>
                 </scg:Dictionary>
               </sap:WorkflowViewStateService.ViewState>
               <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Utills\Generate_Excel.xaml - Invoke Workflow File" sap:VirtualizedContainerService.HintSize="200,52" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_7" UnSafe="False" WorkflowFileName="Utills\Generate_Excel.xaml">
@@ -212,31 +214,71 @@
                   </scg:Dictionary>
                 </sap:WorkflowViewStateService.ViewState>
               </ui:InvokeWorkflowFile>
+              <FlowStep.Next>
+                <FlowStep x:Name="__ReferenceID4">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <av:Point x:Key="ShapeLocation">120,357.4</av:Point>
+                      <av:Size x:Key="ShapeSize">200,52</av:Size>
+                      <av:PointCollection x:Key="ConnectorLocation">220,409.4 220,429.4</av:PointCollection>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Utills\Generate_HTML.xaml - Invoke Workflow File" sap:VirtualizedContainerService.HintSize="334,113" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_10" UnSafe="False" WorkflowFileName="Utills\Generate_HTML.xaml">
+                    <ui:InvokeWorkflowFile.Arguments>
+                      <OutArgument x:TypeArguments="x:String" x:Key="out_str_htmlContent">
+                        <VisualBasicReference x:TypeArguments="x:String" ExpressionText="str_HtmlContent" />
+                      </OutArgument>
+                      <InArgument x:TypeArguments="x:String" x:Key="in_str_fileName">
+                        <VisualBasicValue x:TypeArguments="x:String" ExpressionText="str_excelFileName" />
+                      </InArgument>
+                      <InArgument x:TypeArguments="x:String" x:Key="in_str_managerName">
+                        <VisualBasicValue x:TypeArguments="x:String" ExpressionText="QueueItem_CurrentTransaction.SpecificContent(&quot;מנהל פרוייקט&quot;).ToString" />
+                      </InArgument>
+                    </ui:InvokeWorkflowFile.Arguments>
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                  </ui:InvokeWorkflowFile>
+                  <FlowStep.Next>
+                    <FlowStep x:Name="__ReferenceID1">
+                      <sap:WorkflowViewStateService.ViewState>
+                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                          <av:Point x:Key="ShapeLocation">120,429.4</av:Point>
+                          <av:Size x:Key="ShapeSize">200,52</av:Size>
+                        </scg:Dictionary>
+                      </sap:WorkflowViewStateService.ViewState>
+                      <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Utills\Send_Report_Via_Mail.xaml - Invoke Workflow File" sap:VirtualizedContainerService.HintSize="200,52" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_9" UnSafe="False" WorkflowFileName="Utills\Send_Report_Via_Mail.xaml">
+                        <ui:InvokeWorkflowFile.Arguments>
+                          <InArgument x:TypeArguments="x:String" x:Key="in_str_htmlContent">
+                            <VisualBasicValue x:TypeArguments="x:String" ExpressionText="str_HtmlContent" />
+                          </InArgument>
+                          <InArgument x:TypeArguments="x:String" x:Key="in_projectManagerName">
+                            <VisualBasicValue x:TypeArguments="x:String" ExpressionText="QueueItem_CurrentTransaction.SpecificContent(&quot;מנהל פרוייקט&quot;).ToString" />
+                          </InArgument>
+                          <InArgument x:TypeArguments="x:String" x:Key="in_str_excelFileName">
+                            <VisualBasicValue x:TypeArguments="x:String" ExpressionText="str_excelFileName" />
+                          </InArgument>
+                        </ui:InvokeWorkflowFile.Arguments>
+                        <sap:WorkflowViewStateService.ViewState>
+                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                          </scg:Dictionary>
+                        </sap:WorkflowViewStateService.ViewState>
+                      </ui:InvokeWorkflowFile>
+                    </FlowStep>
+                  </FlowStep.Next>
+                </FlowStep>
+              </FlowStep.Next>
             </FlowStep>
           </FlowStep.Next>
         </FlowStep>
       </FlowStep.Next>
     </FlowStep>
     <x:Reference>__ReferenceID0</x:Reference>
-    <FlowStep>
-      <sap:WorkflowViewStateService.ViewState>
-        <scg:Dictionary x:TypeArguments="x:String, x:Object">
-          <av:Point x:Key="ShapeLocation">360,364</av:Point>
-          <av:Size x:Key="ShapeSize">200,52</av:Size>
-        </scg:Dictionary>
-      </sap:WorkflowViewStateService.ViewState>
-      <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Utills\Send_Report_Via_Mail.xaml - Invoke Workflow File" sap:VirtualizedContainerService.HintSize="200,52" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_9" UnSafe="False" WorkflowFileName="Utills\Send_Report_Via_Mail.xaml">
-        <ui:InvokeWorkflowFile.Arguments>
-          <scg:Dictionary x:TypeArguments="x:String, Argument" />
-        </ui:InvokeWorkflowFile.Arguments>
-        <sap:WorkflowViewStateService.ViewState>
-          <scg:Dictionary x:TypeArguments="x:String, x:Object">
-            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-          </scg:Dictionary>
-        </sap:WorkflowViewStateService.ViewState>
-      </ui:InvokeWorkflowFile>
-    </FlowStep>
-    <FlowStep x:Name="__ReferenceID3">
+    <x:Reference>__ReferenceID1</x:Reference>
+    <FlowStep x:Name="__ReferenceID5">
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
           <av:Point x:Key="ShapeLocation">120,19.5</av:Point>
@@ -244,21 +286,14 @@
           <av:PointCollection x:Key="ConnectorLocation">220,100.5 220,123.4</av:PointCollection>
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
-      <Sequence DisplayName="variable declarations and conversions " sap:VirtualizedContainerService.HintSize="496,921" sap2010:WorkflowViewState.IdRef="Sequence_3">
+      <Sequence DisplayName="variable declarations and conversions " sap:VirtualizedContainerService.HintSize="200,81" sap2010:WorkflowViewState.IdRef="Sequence_3">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">False</x:Boolean>
             <x:Boolean x:Key="IsPinned">False</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
-        <ui:InvokeCode ContinueOnError="{x:Null}" Code="' Import necessary namespaces (ensure these are in &quot;Imported Namespaces&quot; in Invoke Code)&#xD;&#xA;' UiPath.Core&#xD;&#xA;' System.Collections.Generic&#xD;&#xA;&#xD;&#xA;' Create a dictionary to simulate SpecificContent&#xD;&#xA;Dim specificContent As New Dictionary(Of String, Object)&#xD;&#xA;specificContent.Add(&quot;קוד מנהל פרויקט&quot;, &quot;7100079&quot;) ' Example key-value pair&#xD;&#xA;specificContent.Add(&quot;SomeOtherField&quot;, &quot;TestValue&quot;) ' Add more fields as needed&#xD;&#xA;&#xD;&#xA;' Create a real QueueItem object&#xD;&#xA;io_queueItem = New UiPath.Core.QueueItem()&#xD;&#xA;io_queueItem.SpecificContent = specificContent&#xD;&#xA;io_queueItem.Priority = UiPath.Core.QueueItemPriority.High ' Use enum for Priority&#xD;&#xA;io_queueItem.Status = QueueItemStatus.New&#xD;&#xA;&#xD;&#xA;' Test accessing it&#xD;&#xA;Console.WriteLine(io_queueItem.SpecificContent(&quot;קוד מנהל פרויקט&quot;).ToString) ' Outputs: 7100110" DisplayName="Invoke Code" sap:VirtualizedContainerService.HintSize="434,165" sap2010:WorkflowViewState.IdRef="InvokeCode_1">
-          <ui:InvokeCode.Arguments>
-            <InOutArgument x:TypeArguments="ui:QueueItem" x:Key="io_queueItem">
-              <VisualBasicReference x:TypeArguments="ui:QueueItem" ExpressionText="QueueItem_CurrentTransaction" />
-            </InOutArgument>
-          </ui:InvokeCode.Arguments>
-        </ui:InvokeCode>
-        <Assign sap:VirtualizedContainerService.HintSize="434,81" sap2010:WorkflowViewState.IdRef="Assign_1">
+        <Assign sap:VirtualizedContainerService.HintSize="434,82" sap2010:WorkflowViewState.IdRef="Assign_1">
           <Assign.To>
             <OutArgument x:TypeArguments="x:String">[str_excelFileName]</OutArgument>
           </Assign.To>
@@ -277,9 +312,10 @@
         <ui:LogMessage sap:VirtualizedContainerService.HintSize="434,141" sap2010:WorkflowViewState.IdRef="LogMessage_3" Level="[UiPath.Core.Activities.LogLevel.Info]" Message="[&quot;Temporary folder created in path &quot; + System.IO.Directory.GetCurrentDirectory() + &quot;TempReport&quot;]" />
       </Sequence>
       <FlowStep.Next>
-        <x:Reference>__ReferenceID1</x:Reference>
+        <x:Reference>__ReferenceID2</x:Reference>
       </FlowStep.Next>
     </FlowStep>
-    <x:Reference>__ReferenceID2</x:Reference>
+    <x:Reference>__ReferenceID3</x:Reference>
+    <x:Reference>__ReferenceID4</x:Reference>
   </Flowchart>
 </Activity>
