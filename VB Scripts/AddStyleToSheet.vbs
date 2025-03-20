@@ -13,16 +13,19 @@ Sub AddStyleToSheet()
     ' Set the first row range based on table start and width
     Set firstRowRange = tableStart.Resize(1, intTableWidth)
     
-    ' Apply right-to-left setting on all sheets, freeze first row, auto-fit columns
     SetAllSheetsRTL
+	
     FreezeFirstRow
+
     AutoFitColumns firstRowRange
-    ' Color the first column (except header)
+
     ColorFirstColumn ws
 	
 	ColorLowPercentagesInColumnI
 	
 	ColorHighVacationHoursInColumnO
+	
+	ColorNegativeBalanceInColumnP
 	
 	ColorAllNumbersBlue
 	
@@ -33,8 +36,11 @@ Sub AddStyleToSheet()
 	CenterTextInFirstRow firstRowRange
 
 	FormatTotalRows	
+	
 		
 	FormatBigNumbersWithCommas
+	
+	FormatNegativeNumbersWithParentheses
 End Sub
 
 Sub SetAllSheetsRTL()
@@ -206,6 +212,52 @@ Sub ColorLowPercentagesInColumnI()
     Next i
 End Sub
 
+' Colors negative values in sick days
+Sub ColorNegativeBalanceInColumnP()
+    Dim ws As Worksheet
+    Dim lastRow As Long
+    Dim i As Long
+    Dim cellValue As String
+    Dim numericValue As Double
+    Dim isNumericValue As Boolean
+    
+    ' Set the active sheet
+    Set ws = ActiveSheet
+    
+    ' Find the last used row in column P (16th column)
+    lastRow = ws.Cells(ws.Rows.Count, 16).End(xlUp).Row
+    
+    ' Loop through all rows in column P, starting from row 2 (skip header)
+    For i = 2 To lastRow
+        ' Get the cell value as a string and remove leading/trailing spaces
+        cellValue = Trim(ws.Cells(i, 16).Text) ' Use .Text to get the displayed value
+        
+        ' Reset flags and values
+        isNumericValue = False
+        numericValue = 0
+        
+        ' Check if the cell is not empty
+        If cellValue <> "" Then
+            ' Replace any potential comma decimal separator with a dot
+            cellValue = Replace(cellValue, ",", ".")
+            
+            ' Try to convert the string to a number
+            On Error Resume Next
+            numericValue = CDbl(cellValue)
+            If Err.Number = 0 Then
+                isNumericValue = True
+            End If
+            On Error GoTo 0 ' Reset error handling
+            
+            ' Check if the value is a valid number and negative
+            If isNumericValue And numericValue < 0 Then
+                ' Set the background color to red
+                ws.Cells(i, 16).Interior.Color = RGB(255, 192, 203)
+            End If
+        End If
+    Next i
+End Sub
+
 Sub FormatBigNumbersWithCommas()
     Dim ws As Worksheet
     Dim rng As Range
@@ -239,7 +291,7 @@ Sub FormatBigNumbersWithCommas()
     Next cell
 End Sub
 
-' colors values greater than 90 in column N red
+' Colors values greater than 90 in column N red
 Sub ColorHighVacationHoursInColumnO()
     Dim ws As Worksheet
     Dim lastRow As Long
@@ -296,4 +348,34 @@ Sub ColorHighVacationHoursInColumnO()
         End If
 NextRow:
     Next i
+End Sub
+
+Sub FormatNegativeNumbersWithParentheses()
+    Dim ws As Worksheet
+    Dim rng As Range
+    Dim cell As Range
+    
+    Set ws = ActiveSheet
+    Set rng = ws.UsedRange
+
+    For Each cell In rng
+        ' Skip column B (2nd column)
+        If cell.Column <> 2 And cell.Row > 1 Then ' Skip header row
+            If IsNumeric(cell.Value) And Not IsEmpty(cell.Value) Then
+                If cell.Value < 0 Then
+                    ' Set font color to red
+                    cell.Font.Color = vbRed
+
+                    ' Format with parentheses
+                    If InStr(cell.NumberFormat, "%") > 0 Then
+                        ' If it's a percentage
+                        cell.NumberFormat = "(\0#)%"
+                    Else
+                        ' For regular numbers, format with parentheses and comma separators
+                        cell.NumberFormat = "_(* #,##0_);_(* (#,##0);_(* ""-""??_);_(@_)"
+                    End If
+                End If
+            End If
+        End If
+    Next cell
 End Sub
